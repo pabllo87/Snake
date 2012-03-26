@@ -24,6 +24,61 @@ function start(){
     
     // This draws a squere with the parameters from the variables set above
     ctx.fillRect(x, y, width, height);
+    
+    direction = 'right';
+    
+    setInterval(moveSnake, 100);
+}
+
+//This is function to draw squere on current position
+function drawSnake(){
+    ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
+}
+
+function leftPosition(){
+    return currentPosition['x'] - gridSize;
+}
+
+function rightPosition(){
+    return currentPosition['x'] + gridSize;
+}
+
+function upPosition(){
+    return currentPosition['y'] - gridSize;
+}
+
+function downPosition(){
+    return currentPosition['y'] + gridSize;
+}
+
+function moveUp(){
+    if (upPosition() >= 0){
+        executeMove('up', 'y', upPosition());
+    }
+}
+
+function moveDown(){
+    if (downPosition() < canvas.height){
+        executeMove('down', 'y', downPosition());
+    }
+}
+
+function moveLeft(){
+    if (leftPosition() >= 0){
+        executeMove('left', 'x', leftPosition());
+    }
+}
+
+function moveRight(){
+    if (rightPosition() < canvas.width){
+        executeMove('right', 'x', rightPosition());
+    }
+}
+
+function executeMove(dirValue, axisType, axisValue){
+    direction = dirValue;
+    currentPosition[axisType] = axisValue;
+    drawSnake();
 }
 
 document.onkeydown = function(event) {
@@ -43,33 +98,46 @@ document.onkeydown = function(event) {
         //left
         case 37:
             //action when pressing left key
-            //set new position, and draw squere at that position.
-            currentPosition['x'] = currentPosition['x'] - gridSize;
-            ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
+            //call function to move left
+            moveLeft();
             break;
     
         //up
         case 38:
             //action when pressing up key
-            currentPosition['y'] = currentPosition['y'] - gridSize;
-            ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
+            moveUp();
             break;
     
         //right
         case 39:
             //action when pressing right key
-            currentPosition['x'] = currentPosition['x'] + gridSize;
-            ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
+            moveRight();
             break;
     
         //down
         case 40:
             //action when pressing down key
-            currentPosition['y'] = currentPosition['y'] + gridSize;
-            ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
+            moveDown();
             break;
         
         default:
+            break;
+    }
+}
+//this is move snake in loop
+function moveSnake(){
+    switch(direction){
+        case 'up':
+            moveUp();
+            break;
+        case 'down':
+            moveDown();
+            break;
+        case 'left':
+            moveLeft();
+            break;
+        case 'right':
+            moveRight();
             break;
     }
 }
