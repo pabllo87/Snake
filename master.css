@@ -1,7 +1,22 @@
 body {
-  background: #111; 
+  background: #111;
+  color: #fff;
+  width:400px;
 }
 
 canvas {
   border: solid 1px red; 
+}
+
+#logo {
+  font-family: helvetica;
+  font-size: 1.4em;
+}
+
+#pause_menu, #restart_menu {
+  display: none;
+}
+#score_container {
+  float: right;
+  display: inline;
 }
